@@ -3,3 +3,4 @@ __pycache__
 myven
 db.sqlite3
 .DS_Store
+.idea
