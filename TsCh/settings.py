@@ -42,9 +42,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'beers',
+    'kombu.transport.django',
 )
-INSTALLED_APPS += ("djcelery", )
-INSTALLED_APPS += ("djkombu", )
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -117,25 +117,9 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
 )
 
+CELERY_SEND_EVENTS = True
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+import djcelery
+djcelery.setup_loader()
 
-from celery.schedules import crontab
-from .celery import form_view
 
-
-CELERYBEAT_SCHEDULE = {
-    # crontab(hour=0, minute=0, day_of_week='saturday')
-    'schedule-name': {  # example: 'file-backup'
-        'task': 'celery.form_view',  # example: 'files.tasks.cleanup'
-        'schedule': form_view
-    },
-}
-
-# if you want to place the schedule file relative to your project or something:
-CELERYBEAT_SCHEDULE_FILENAME = "some/path/and/filename"
-
-BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'

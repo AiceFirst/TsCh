@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from .tasks import delete_some
 from datetime import datetime, timedelta
 
 import re
@@ -19,6 +20,7 @@ class Post(models.Model):
             default=timezone.now)
     published_date = models.DateTimeField(
             blank=True, null=True)
+    delete_some.delay()
 
     def publish(self):
         self.published_date = timezone.now()

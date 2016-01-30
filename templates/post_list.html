@@ -3,7 +3,8 @@
 {% block content %}
 
         <div align = "right">
-         <a href="/auth/login/"><button type="submit">Войти/Выйти</button></a>
+         <a href="/auth/login/"><button type="submit">Войти/Выйти</button></a> </br> </br>
+        <a href="/auth/register/"><button type="submit">Зарегестрироваться</button></a>
         </div>
     </form>
                  {% for post in posts %}
@@ -16,4 +17,11 @@
                             <p><b>{{ post.title }}</b></p>
                         </div>
                     {% endfor %}
+        <h1>New Massage</h1>
+        <form method="POST" class="post-form">{% csrf_token %}
+            {{ form.as_p }}
+            </br>
+            <button type="submit" class="save btn btn-default">Save</button>
+        </form>
+
 {% endblock content %}
