@@ -9,8 +9,11 @@
     </form>
                  {% for post in posts %}
                         <div class="post">
-                        <div class="date">
+                        <div class="date"  align = "right">
                             {{ post.published_date }}
+
+                            <li><a href="{% url 'delete_note' pk=post.pk %}">Delete</a></li>
+
                         </div>
                             <h3><a href="">{{ post.author }}</a></h3>
                             <p>{{ post.text|linebreaks }}</p>
@@ -18,9 +21,8 @@
                         </div>
                     {% endfor %}
         <h1>New Massage</h1>
-        <form method="POST" class="post-form">{% csrf_token %}
+        <form method="post" class="post-form">{% csrf_token %}
             {{ form.as_p }}
-            </br>
             <button type="submit" class="save btn btn-default">Save</button>
         </form>
 

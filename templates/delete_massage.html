@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+Вы уверены что хотите удалить: {{ object.text }} ?
+<form method="post">
+  {% csrf_token %}
+    {% if  request.user.is_authenticated %}
+   <button type="submit" class="btn btn-danger">Да, удалить.</button>
+   {% endif %}
+</form>
+{% endblock %}
