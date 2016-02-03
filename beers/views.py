@@ -56,12 +56,12 @@ def user_have_perms(request, pk, fl):             ##Todo 1. Тут надо за
 
 
 class NoteDelete(DeleteView):
-    if user_have_perms:                          ##Todo 2. Зачекать этот иф, а точнее что он делает замену страницы удаления на бредовую если аргумент False.
+    if user_have_perms:                          ##Todo 2. Зачекать этот иф, а точнее что он делает замену страницы удаления на стартовую если аргумент False.
         model = Post
         success_url = reverse_lazy('post_list')  # This is where this view will redirect the user
         template_name = 'delete_massage.html'
     else:
-        template_name = 'logout.html'
+        template_name = 'post_list.html'
         success_url = reverse_lazy('post_list')
 
 def post_edit(request, pk):
