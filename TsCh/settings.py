@@ -65,6 +65,7 @@ TEMPLATES = [
         'DIRS': ['/home/artur/work/python/study/TsCh/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
+            'builtins': ['permission.templatetags.permissionif'],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',

@@ -42,27 +42,28 @@ from django.views.generic.edit import DeleteView # this is the generic view
 from django.core.urlresolvers import reverse_lazy
 from beers.models import Post
 
-def user_have_perms(request, pk, fl):             ##Todo 1. Тут надо зачекать, что оно возвращает флаг и перейти в пункт 2.
+def user_have_perms(request, pk, fl):           ##Todo 1. Тут надо зачекать, что оно возвращает флаг и перейти в пункт 2.
     post = get_object_or_404(Post, pk=pk)
     fl = False
     if request.method == "POST":
             form = PostForm(request.POST, instance=post)
             if form.is_valid():
-                 user = get_object_or_404(User, pk=request.user)
-                 post_auth = post.author
-                 if user == post_auth:
-                     fl = True
+                 if request.user.is_authenticated():
+                    if User.get_username == post.author:
+                        fl = True
     return fl
+
+from django.contrib.auth.decorators import permission_required
 
 
 class NoteDelete(DeleteView):
-    if user_have_perms:                          ##Todo 2. Зачекать этот иф, а точнее что он делает замену страницы удаления на стартовую если аргумент False.
-        model = Post
-        success_url = reverse_lazy('post_list')  # This is where this view will redirect the user
-        template_name = 'delete_massage.html'
-    else:
-        template_name = 'post_list.html'
-        success_url = reverse_lazy('post_list')
+       def somefunc(self):
+              if user_have_perms:
+                 NoteDelete.model = Post
+                 nisan = self.somefunc(model=Post, success_url=reverse_lazy('post_list'), template_name='delete_massage.html')
+                 return nisan
+              else:
+                 return None
 
 def post_edit(request, pk):
         post = get_object_or_404(Post, pk=pk)
@@ -76,3 +77,5 @@ def post_edit(request, pk):
         else:
             form = PostForm(instance=post)
         return render(request, 'post_edit.html', {'form': form})
+
+
