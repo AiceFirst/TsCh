@@ -49,7 +49,7 @@ def user_have_perms(request, pk, fl):           ##Todo 1. Тут надо зач
             form = PostForm(request.POST, instance=post)
             if form.is_valid():
                  if request.user.is_authenticated():
-                    if User.get_username == post.author:
+                    if request.user.get_username == post.author:
                         fl = True
     return fl
 
