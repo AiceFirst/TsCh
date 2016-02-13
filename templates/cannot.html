@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
+Вам не по силам удалить: {{ object.text }}
+   <a href="{% url 'post_list' %}"><button type="submit">Ок</button></a>
+{% endblock %}

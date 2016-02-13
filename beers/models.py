@@ -9,7 +9,7 @@ class BadWords(models.Model):
     bwords = models.TextField()
 
     def __str__(self):
-        return str(self.bwords.split(','))
+        return self.bwords.split(', ')
 
 
 class Post(models.Model):
@@ -24,8 +24,6 @@ class Post(models.Model):
     def publish(self):
         self.published_date = timezone.now()
         self.save()
-
-
 
     def __str__(self):
         return self.text
