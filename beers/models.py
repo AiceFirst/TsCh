@@ -1,15 +1,12 @@
 from django.db import models
 from django.utils import timezone
-from .tasks import delete_some
-from datetime import datetime, timedelta
 
-import re
 # Create your models here.
 class BadWords(models.Model):
     bwords = models.TextField()
 
     def __str__(self):
-        return self.bwords.split(', ')
+        return str(self.bwords.split(', '))
 
 
 class Post(models.Model):
@@ -27,5 +24,3 @@ class Post(models.Model):
 
     def __str__(self):
         return self.text
-
-

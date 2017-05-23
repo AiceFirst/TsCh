@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import patterns, include, url
-from . import views
+from django.conf.urls import url
+from auth import views
+from django.contrib.auth.views import login,logout
+
 
 urlpatterns = [
-    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html', 'redirect_field_name': r'^$'}),
+    url(r'^login/$', login, {'template_name': 'login.html', 'redirect_field_name': r'^$'}, name='login'),
     url(r'^register/$', views.RegisterFormView.as_view()),
-]
+    url(r'^logout2/$', logout, {'template_name': 'logout.html', 'redirect_field_name': r'^$'}, name='auth_logout'),
+    ]
 
 

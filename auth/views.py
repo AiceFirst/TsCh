@@ -1,9 +1,7 @@
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
 from TsCh.settings import LOGIN_URL
-from django.http import HttpResponseRedirect
-from django.views.generic.base import View
-from django.contrib.auth import logout
+
 
 class RegisterFormView(FormView):
     form_class = UserCreationForm
@@ -22,13 +20,10 @@ class RegisterFormView(FormView):
         # Вызываем метод базового класса
         return super(RegisterFormView, self).form_valid(form)
 
+from django.contrib.auth.views import logout
 
-#ToDo Продумать логаут
-#class LogoutView(View):
-#    def get(self, request):
-        # Выполняем выход для пользователя, запросившего данное представление.
-#        logout(request)
 
-        # После чего, перенаправляем пользователя на главную страницу.
-#        return HttpResponseRedirect("/auth/login/")
-
+def my_logout(request):
+    logout(request)
+    from django.http import HttpResponseRedirect
+    return HttpResponseRedirect("/logout2/")

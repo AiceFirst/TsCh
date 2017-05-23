@@ -15,6 +15,6 @@ from celery.task import task
 
 @task(bind=True, default_retry_delay=300)
 def delete_some():
-    from beers.models import Post
-    post = Post.objects.all()
-    post.filter(created_date__gte=(datetime.now() - timedelta(days=1))).delete()
+        from beers.models import Post
+        post = Post.objects.all()
+        post.filter(created_date__gte=(datetime.now() - timedelta(days=1))).delete()

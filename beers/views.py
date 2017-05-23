@@ -2,44 +2,49 @@ from django.http.response import HttpResponseForbidden, Http404
 from django.shortcuts import render
 from TsCh.settings import MEDIA_ROOT, MEDIA_URL
 from django.utils import timezone
-from django.shortcuts import render_to_response, HttpResponseRedirect,get_object_or_404,redirect
-from django.conf import settings
+from django.shortcuts import render_to_response, HttpResponseRedirect, get_object_or_404, redirect
 from beers.forms import PostForm
 from beers.models import Post, BadWords
-from django.contrib.auth.models import Permission, User
-#from TsCh import settings
-#from django.contrib.auth.models import User
+from django.contrib.auth.models import User
+
 
 
 # Create your views here.
 
 def post_list(request):
+    fl = False
+    if request.user.is_authenticated():
+            fl = True
     if request.method == "POST":
         form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            #for bword in BadWords.bwords:
-                #post.text.replace(bword, "".join(['*', bword[1:-1], '*']))
-            post.author = request.user
-            post.title = '1'
-            post.published_date = timezone.now()
-            post.save()
-            return HttpResponseRedirect('/')
+        if request.user.is_authenticated():
+            if form.is_valid():
+                post = form.save(commit=False)
+               # for bword in BadWords.objects.get().bwords:
+                #    post.text.replace(bword, "".join(['*', bword[1:-1], '*']))
+                post.author = request.user
+                post.title = '...'
+                post.published_date = timezone.now()
+                post.save()
+                return HttpResponseRedirect('/')
+        else:
+            return HttpResponseRedirect('/auth/login/')
     else:
             form = PostForm()
     posts = Post.objects.order_by('published_date')
-    return render_to_response('post_list.html', {'posts': posts, 'form': form, 'images': MEDIA_URL, 'media_root': MEDIA_ROOT})
+    top = top_count(request)
+    return render_to_response('post_list.html', {'posts': posts, 'authed': fl, 'top': top, 'form': form, 'images': MEDIA_URL, 'media_root': MEDIA_ROOT})
 
 def post_detail(request, pk):
         post = get_object_or_404(Post, pk=pk)
         return render(request, 'post_detail.html', {'post': post})
 
 
-from django.views.generic.edit import DeleteView# this is the generic view
+from django.views.generic.edit import DeleteView # this is the generic view
 from django.core.urlresolvers import reverse_lazy
 
 
-def user_have_perms(request, pk):           ##Todo 1. Тут надо зачекать, что оно возвращает флаг и перейти в пункт 2.
+def user_have_perms(request, pk):
     post = get_object_or_404(Post, pk=pk)
     fl = False
     if request.user.is_authenticated():
@@ -47,7 +52,6 @@ def user_have_perms(request, pk):           ##Todo 1. Тут надо зачек
             fl = True
     return fl
 
-from django.contrib.auth.decorators import permission_required
 
 
 class NoteDelete(DeleteView):
@@ -76,16 +80,24 @@ def post_edit(request, pk):
             form = PostForm(instance=post)
         return render(request, 'post_edit.html', {'form': form})
 
+from django.db.models import Count
+from django.contrib.auth.models import User
 
 
 def top_count(request):
-    maxy = 0
-    top_men = None
-    for authors in User.objects.all():
-                number = Post.objects.filter(author=authors).count()
-                if number > maxy:
-                    maxy = number
-                    top_men = authors
-    return top_men
+
+    top_men = User.objects.annotate(post_times=Count('post')).order_by('-post_times')[:5]
+    top_authors = ''
+    for i in top_men:
+     top_authors = top_authors + str(i)+', '
+    top_authors = top_authors[:-2]
+    return top_authors
+
+
+def post_cruser(request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        form = post.author.username
+        return render(request, 'cruser.html', {'form': form}) #ToDo chec the authors and bring them from db!!
+
 
 

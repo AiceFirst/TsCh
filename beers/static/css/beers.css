@@ -57,6 +57,10 @@ body {
         color: #1A8234;
     }
 
+    .top p b {
+        color: red;
+    }
+
     .post h3 a, .post h3 a:visited {
         color: #000000;
 

@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+    {% csrf_token %}
+    <a href="/"> <button type="submit" class="btn btn-danger">You are logged out.</button></a>
+
+{% endblock %}

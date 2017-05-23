@@ -3,8 +3,12 @@
 {% block content %}
 
         <div align = "right">
-         <a href="/auth/login/"><button type="submit">Войти/Выйти</button></a> </br> </br>
-        <a href="/auth/register/"><button type="submit">Зарегестрироваться</button></a>
+            {% if authed %}
+           <a href="/auth/logout2/"><button type="submit">Logout</button></a> </br> </br>
+           {% else %}
+             <a href="/auth/login/"><button type="submit">Login</button></a> </br> </br>
+            <a href="/auth/register/"><button type="submit">Register</button></a>
+           {% endif %}
         </div>
     </form>
                  {% for post in posts %}
@@ -15,16 +19,23 @@
                             <li><a href="{% url 'delete_note' pk=post.pk %}">Delete</a></li>
 
                         </div>
-                            <h3><a href="">{{ post.author }}</a></h3>
+                            <h3><a href="{% url 'post_cruser' pk=post.pk %}">{{ post.author }}</a></h3>
                             <p>{{ post.text|linebreaks }}</p>
                             <p><b>{{ post.title }}</b></p>
                         </div>
                     {% endfor %}
 
+                 <div align = "right">
+                 <div class="top">
+                     <p><b>The most active users are - {{ top }} !</b></p>
+
+                 </div>
+                 </div>
+
         <h1>New Massage</h1> </br>
         <form method="post" class="post-form">{% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="save btn btn-default">Save</button>
+            <button type="submit" class="save btn btn-default">Send</button>
         </form>
 
 {% endblock content %}

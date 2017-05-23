@@ -12,11 +12,11 @@ from datetime import datetime, timedelta
 
 
 
-#@app.task(bind=True)
-#def form_view(self):
-#    self.Post.objects.filter(published_date__gte=(datetime.now() - timedelta(days=1))).delete()
+@app.task(bind=True)
+def form_view(self):
+    self.Post.objects.filter(published_date__gte=(datetime.now() - timedelta(days=1))).delete()
 
-#@app.task(bind=True)
-#def delete_some():
-#    from beers.models import Post
-#    Post.objects.filter(published_date__gte=(datetime.now() - timedelta(days=1))).delete()
+@app.task(bind=True)
+def delete_some():
+    from beers.models import Post
+    Post.objects.filter(published_date__gte=(datetime.now() - timedelta(days=1))).delete()
