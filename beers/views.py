@@ -1,10 +1,10 @@
-from django.http.response import HttpResponseForbidden, Http404
+from django.http.response import Http404
 from django.shortcuts import render
 from TsCh.settings import MEDIA_ROOT, MEDIA_URL
 from django.utils import timezone
 from django.shortcuts import render_to_response, HttpResponseRedirect, get_object_or_404, redirect
 from beers.forms import PostForm
-from beers.models import Post, BadWords
+from beers.models import Post
 from django.contrib.auth.models import User
 
 
@@ -100,4 +100,6 @@ def post_cruser(request, pk):
         return render(request, 'cruser.html', {'form': form}) #ToDo chec the authors and bring them from db!!
 
 
-
+def messages(request):
+    c = Post.objects.all()
+    return render(request, 'messages.html', {'posts': c})

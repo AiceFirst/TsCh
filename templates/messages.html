@@ -1,0 +1,15 @@
+{% for post in posts %}
+    <div class="post">
+        <div class="date" align="right">
+            {{ post.published_date }}
+
+            <li><a href="{% url 'delete_note' pk=post.pk %}">Delete</a></li>
+
+        </div>
+        <h3><a href="{% url 'post_cruser' pk=post.pk %}">{{ post.author }}</a></h3>
+
+        <p>{{ post.text|linebreaks }}</p>
+
+        <p><b>{{ post.title }}</b></p>
+    </div>
+{% endfor %}

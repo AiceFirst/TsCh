@@ -1,9 +1,16 @@
 <!DOCTYPE html>
  {% extends 'base.html' %}
+
 {% block content %}
+
 
         <div align = "right">
             {% if authed %}
+                <script>
+                    window.onload = function () {
+                        window.scrollTo(0, document.body.scrollHeight);
+                    }
+                </script>
            <a href="/auth/logout2/"><button type="submit">Logout</button></a> </br> </br>
            {% else %}
              <a href="/auth/login/"><button type="submit">Login</button></a> </br> </br>
@@ -11,6 +18,8 @@
            {% endif %}
         </div>
     </form>
+    <div id="msg-list-div" class="panel-body">
+        <div id="msg-list" class="list-group">
                  {% for post in posts %}
                         <div class="post">
                         <div class="date"  align = "right">
@@ -24,6 +33,13 @@
                             <p><b>{{ post.title }}</b></p>
                         </div>
                     {% endfor %}
+
+            <script>
+                var chatlist = document.getElementById('msg-list-div');
+                chatlist.scrollTop = chatlist.scrollHeight;
+            </script>
+        </div>
+    </div>
 
                  <div align = "right">
                  <div class="top">

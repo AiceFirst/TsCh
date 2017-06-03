@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
-from django import forms
 import os
-os.environ['DJANGO_SETTINGS_MODULE'] = 'TsCh.settings'
+
+from django import forms
 from beers.models import Post
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'TsCh.settings'
+
 
 class PostForm(forms.ModelForm):
     class Meta:

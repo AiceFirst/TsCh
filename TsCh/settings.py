@@ -16,7 +16,6 @@ import os
 
 
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -61,7 +60,7 @@ ROOT_URLCONF = 'TsCh.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/home/artur/work/python/study/TsCh/templates/'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/')],
         'APP_DIRS': True,
         'OPTIONS': {
            # 'builtins': ['permission.templatetags.permissionif'],
@@ -105,16 +104,19 @@ TIME_ZONE = 'UTC'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/home/artur/Bred/Static/'
-STATIC_ROOT = '/home/artur/Bred/Static/'
-MEDIA_URL = '/home/artur/Bred/Static/media/'
-MEDIA_ROOT = '/home/artur/Bred/Static/media/'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/static/'
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [STATIC_DIR, ]
+
+MEDIA_URL = os.path.join(BASE_DIR, 'static/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media/')
 
 
 LOGIN_REDIRECT_URL = r'/'
 LOGIN_URL = '/auth/login/'
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,  'templates'),
+    os.path.join(BASE_DIR, 'templates/'),
 )
 
 CELERY_SEND_EVENTS = True

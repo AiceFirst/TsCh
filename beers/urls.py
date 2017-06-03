@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^delete/(?P<pk>\d+)/$', views.NoteDelete.as_view(), name="delete_note"),
     url(r'^post/(?P<pk>[0-9]+)/edit/$', views.post_edit, name='post_edit'),
     url(r'^post/(?P<pk>[0-9]+)/user/$', views.post_cruser, name='post_cruser'),
+    url(r'^messages/$', views.messages, name='messages'),
 ]
