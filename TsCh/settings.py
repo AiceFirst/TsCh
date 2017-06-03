@@ -28,7 +28,7 @@ SECRET_KEY = '+(_d*k^m73*jn=xps)(8r&fcwz-twk%8%3@dsk17-oq+-m1=hl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['aicefirst.pythonanywhere.com']
 
 
 # Application definition
